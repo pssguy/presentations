@@ -4,7 +4,7 @@ author: "Andrew Clark"
 date: "June 12, 2016"
 output: 
   revealjs::revealjs_presentation:
-    #theme: beige
+    theme: beige
     incremental: true
     transition: fade
     reveal_options:
@@ -18,23 +18,22 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-<!-- ## {data-background-iframe="https://mytinyshinys.shinyapps.io/musicChartsFlexDB/"}  -->
+<!-- ## {data-background-iframe="https://mytinyshinys.shinyapps.io/musicChartsFlexDB/"} -->
 
+ 
 
 ## Juke Box Features 
-
-csstest
 
 - Weekly Charts and Videos for decades 
 - US and UK Single charts
 - Artist Selection
-- This week -That Year
+- This Week - That Year
 
-## Major Inputs 
+## Major Inputs
 
-- [Ultimate Music Database](http://www.umdmusic.com/) 
+- [Ultimate Music Database](http://www.umdmusic.com/)
 - [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard/)
-- [vembedr](https://github.com/ijlyttle/vembedr) 
+- [vembedr](https://github.com/ijlyttle/vembedr)
 
 
 
@@ -152,6 +151,15 @@ output$one <- renderUI({
 
 ```
 ![](number1.png)
+
+
+## References
+
+> - [JukeBox Website](https://mytinyshinys.shinyapps.io/musicChartsFlexDB/) 
+- [JukeBox Code](https://github.com/pssguy/presentations)
+- [mytinyshinys dashboard](https://mytinyshinys.shinyapps.io/dashboard/)
+- [@pssguy twitter](https://twitter.com/pssGuy)
+
 
 <!-- ## CSS color background {data-background=#ff0000} -->
 
