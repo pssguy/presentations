@@ -1,0 +1,81 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+First we load the libraries and data. For this example I will just be using data from the Lahman baseball package but you can just as easily load local files or do some web scraping etc.
+
+I will be using several htmlWidgets for speed rather than shiny runtime - though that is entirely possible and I have used for most of my Apps
+
+```{r setup, warning=FALSE, message=FALSE}
+
+
+# Data manipulation and static graphing
+library(tidyverse)
+library(stringr)
+
+# htmlWidgets
+library(plotly) # interactive charts
+library(DT)     # sophisticated tables
+library(leaflet) # mapping
+library(crosstalk) # interactivity between widgets 
+
+# data
+library(Lahman)
+```
+
+### Batting leader by season
+
+This example is a, slightly amended, vignette example replicating a NYT chart
+
+ ![](images/tedWilliams.png) 
+
+
+```{r}
+
+# data carpentry
+
+masterInfo <- Master %>%
+  select(playerID, birthYear, birthMonth, nameLast,
+         nameFirst, bats,birthCountry,birthState,birthCity,debut) 
+
+batting <- battingStats() %>% 
+  left_join(masterInfo, by = "playerID") %>%
+  mutate(age = yearID - birthYear - 
+           1L *(birthMonth >= 10)) %>%
+  arrange(playerID, yearID, stint)
+
+eligibleHitters <- batting %>%
+  filter(yearID >= 1900 & PA > 450)
+
+topHitters <- eligibleHitters %>%
+  group_by(yearID) %>%
+  filter(BA == max(BA)| BA >= .400) %>%
+  mutate(ba400 = BA >= 0.400) %>%
+  mutate(name=paste0(nameFirst," ",nameLast)) %>% 
+  select(playerID, yearID, name, 
+         BA, ba400)
+
+
+# initial plot
+
+topHitters %>%
+  plot_ly(x=~yearID,y=~BA)
+
+# production(ish) chart
+
+topHitters %>% 
+  plot_ly(x=~yearID,y=~BA, color=~name, hoverinfo = "text",
+text = ~ paste(name,
+               "<br>Year: ",yearID,
+               "<br>BA: ",BA)) %>%
+  layout(hovermode = "closest",
+        # height = 400,
+       #  autosize = F,
+         title="The Last to Hit .400?",
+         xaxis=list(title="Season"),
+         yaxis=list(title="Batting Average" ))  %>% 
+  config(displayModeBar = F,showLink = F)
+
+
+```

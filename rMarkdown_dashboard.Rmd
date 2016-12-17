@@ -1,0 +1,115 @@
+---
+title: "MLB Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+# Data manipulation and static graphing
+library(tidyverse)
+library(stringr)
+
+# htmlWidgets
+library(plotly) # interactive charts
+library(DT)     # sophisticated tables
+library(leaflet) # mapping
+library(crosstalk) # interactivity between widgets currntly 1.0.0
+
+# data
+library(Lahman)
+```
+
+<!-- ![](http://www.nytimes.com/interactive/2011/09/18/sports/baseball/WILLIAMS-GRAPHIC.html) -->
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Batting leader by season
+
+```{r}
+
+# data carpentry
+
+masterInfo <- Master %>%
+  select(playerID, birthYear, birthMonth, nameLast,
+         nameFirst, bats,birthCountry,birthState,birthCity,debut) 
+
+batting <- battingStats() %>% 
+  left_join(masterInfo, by = "playerID") %>%
+  mutate(age = yearID - birthYear - 
+           1L *(birthMonth >= 10)) %>%
+  arrange(playerID, yearID, stint)
+
+eligibleHitters <- batting %>%
+  filter(yearID >= 1900 & PA > 450)
+
+topHitters <- eligibleHitters %>%
+  group_by(yearID) %>%
+  filter(BA == max(BA)| BA >= .400) %>%
+  mutate(ba400 = BA >= 0.400) %>%
+  mutate(name=paste0(nameFirst," ",nameLast)) %>% 
+  select(playerID, yearID, name, 
+         BA, ba400)
+
+
+# initial plot
+
+# topHitters %>% 
+#   plot_ly(x=~yearID,y=~BA)
+
+# production(ish) chart
+
+topHitters %>% 
+  plot_ly(x=~yearID,y=~BA, color=~name, hoverinfo = "text",
+text = ~ paste(name,
+               "<br>Year: ",yearID,
+               "<br>BA: ",BA)) %>%
+  layout(hovermode = "closest",
+        # height = 400,
+       #  autosize = F,
+         title="The Last to Hit .400?",
+         xaxis=list(title="Season"),
+         yaxis=list(title="Batting Average" ))  %>% 
+  config(displayModeBar = F,showLink = F)
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Players By Birth Country
+
+```{r}
+df <-masterInfo %>% 
+  mutate(debutSeason=str_sub(debut,1,4)) %>% 
+  group_by(birthCountry,debutSeason) %>% 
+  tally() %>% 
+  group_by(debutSeason) %>% 
+  mutate(pc=round(100*n/sum(n),1)) 
+
+# exploratory plot
+   # df %>% 
+   #   filter(birthCountry=="USA") %>% 
+   #   plot_ly(x = ~as.integer(debutSeason),y= ~pc) 
+
+   # table 
+theTable <- df %>%  
+   rename(Country=birthCountry,Debut=debutSeason,Count=n,PerCent=pc) %>% 
+  DT::datatable(class='compact stripe hover row-border order-column',rownames=TRUE, selection ='single',options= list(paging = TRUE, searching = TRUE,info=FALSE))
+
+theTable
+
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
