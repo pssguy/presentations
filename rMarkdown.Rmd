@@ -1,0 +1,109 @@
+---
+title: "The Seven Wonders of the RMarkdown World" # comments in YAML
+subtitle: "<br/>...and counting"
+author: "Andrew Clark - @pssguy"
+date: "2016/12/13"
+output:
+  xaringan::moon_reader:
+    yolo: false # You Only Live Once shows up if true, not so random images of karl appear
+    lib_dir: libs
+    nature:
+      #autoplay: 30000
+      highlightStyle: github
+      highlightLines: true # come out yellow - I think see below
+--- 
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE) 
+```
+
+# Outputs
+
+- Dashboard
+- Journal
+- Website
+- Blog
+- Presentation
+- Book
+
+<!-- Will want to subslide this? maybe with image for each -->
+
+---
+
+# Formats
+
+- HTML
+- pdf
+- MS Word
+- epub
+- MOBI
+
+
+---
+
+# Image of all types of output
+
+---
+
+wordcloud of (Markdown,Pandoc,Sweave,knitr)
+
+  R eally    
+aM azing    
+  A rsenal of    
+  R endered    
+  K nitted    
+  D ocumentation    
+  O utput    
+  W ithout    
+kN owhow
+
+---
+
+# Basic Document
+
+ - YAML
+ - Simple Text
+ - code chunks
+
+
+---
+
+# In RStudio
+
+---
+
+# In viewer
+
+---
+
+# View HTML
+
+
+---
+
+# Similar concept irrespective of output
+
+libraries
+data
+
+```{r eval=FALSE, tidy=FALSE}
+
+# Data manipulation
+library(tidyverse)
+
+# htmlWidgets
+library(plotly)
+library(DT)
+library(leaflet)
+
+# data
+library(Lahman)
+
+
+```
+
+
+
+
+- Dashboard
+

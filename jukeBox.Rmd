@@ -4,12 +4,12 @@ author: "Andrew Clark"
 date: "June 12, 2016"
 output: 
   revealjs::revealjs_presentation:
-    theme: beige
-    incremental: true
-    transition: fade
-    reveal_options:
-      slideNumber: true
-    css: styles.css
+     theme: beige
+    # incremental: true
+    # transition: fade
+    # reveal_options:
+    #   slideNumber: true
+    # css: styles.css
 --- 
 
 
@@ -153,18 +153,11 @@ output$one <- renderUI({
 ![](number1.png)
 
 
-## References
+<!-- ## References -->
 
-> - [JukeBox Website](https://mytinyshinys.shinyapps.io/musicChartsFlexDB/) 
-- [JukeBox Code](https://github.com/pssguy/presentations)
-- [mytinyshinys dashboard](https://mytinyshinys.shinyapps.io/dashboard/)
-- [@pssguy twitter](https://twitter.com/pssGuy)
-
-
-<!-- ## CSS color background {data-background=#ff0000} -->
-
-<!-- ## Full size image background {data-background="shinyDivRaces.png"} -->
+<!-- > - [JukeBox Website](https://mytinyshinys.shinyapps.io/musicChartsFlexDB/)  -->
+<!-- - [JukeBox Code](https://github.com/pssguy/presentations) -->
+<!-- - [mytinyshinys dashboard](https://mytinyshinys.shinyapps.io/dashboard/) -->
+<!-- - [@pssguy twitter](https://twitter.com/pssGuy) -->
 
 
-
-<!-- ##  {data-background-iframe="https://mytinyshinys.shinyapps.io/worldBank/"} -->
